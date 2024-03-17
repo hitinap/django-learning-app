@@ -1,0 +1,15 @@
+# Создать новый проект
+django-admin startproject <project_name>
+
+# Создать новое приложение внутри проекта
+django-admin startapp <app_name>
+
+# Создать файл requirements.txt в папке репозитория
+pipreqs .
+
+# Выполнить миграции при первом запуске
+python manage.py makemigrations
+python manage.py migrate
+
+# Запустить проект django
+python manage.py runserver
