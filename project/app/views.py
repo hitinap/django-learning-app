@@ -1,6 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from rest_framework import generics
+from .models import Item
+from .serializers import ItemSerializer
 
 # Create your views here.
-def main(request):
-    return HttpResponse('<h1>Hello!</h1>')
+class ItemView(generics.ListAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer

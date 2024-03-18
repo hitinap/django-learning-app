@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import main
+from .views import ItemView
 
 urlpatterns = [
-    path('home/', main),
+    path('item', ItemView.as_view()),
 ]
