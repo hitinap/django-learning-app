@@ -37,3 +37,6 @@ npm install react-router-dom --save --force
 
 # Установка иконок из дополнительных материалов
 npm install @material-ui/icons --force
+
+# Запустить dev окружение npm из корня frontend
+npm run dev
