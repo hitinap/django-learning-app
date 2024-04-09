@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import CalendarPage from "./CalendarPage";
 import {
   BrowserRouter as Router,
-  Switch,
   Route,
+  Routes,
   Link,
   Redirect,
 } from "react-router-dom";
@@ -16,12 +16,10 @@ export default class HomePage extends Component {
   render() {
     return (
       <Router>
-        <Switch>
-          <Route exact path="/">
-            <p>This is the Home page!</p>
-          </Route>
-          <Route path="/calendar" component={CalendarPage} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<p>This is the Home page!</p>} />
+          <Route path="/calendar" element={<CalendarPage />} />
+        </Routes>
       </Router>
     );
   }
