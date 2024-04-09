@@ -4,4 +4,5 @@ from .views import index
 urlpatterns = [
     path('', index),
     path('calendar', index),
+    path('item/<int:id>', index),
 ]

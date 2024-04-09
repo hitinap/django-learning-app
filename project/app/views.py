@@ -11,6 +11,22 @@ class ItemView(generics.ListAPIView):
     serializer_class = ItemSerializer
 
 
+class GetItem(APIView):
+    serializer_class = ItemSerializer
+    lookup_url_kwarg = 'id'
+
+    def get(self, request, format=None):
+        _id = request.GET.get(self.lookup_url_kwarg)
+        if _id is not None:
+            item = Item.objects.filter(id=_id)
+            if len(item) > 0:
+                data = ItemSerializer(item[0]).data
+                return Response(data, status=status.HTTP_200_OK)
+            return Response({'Item not found': 'Invalid item id.'}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response({'Bad request': 'Id not found in request.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
 class CreateItemView(APIView):
     serializer_class = CreateItemSerializer
 

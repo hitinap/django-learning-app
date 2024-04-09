@@ -5,12 +5,16 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-export default class CalendarPage extends Component {
+function withHistory(Component) {
+  return (props) => <Component {...props} history={useNavigate()} />;
+}
+
+class CalendarPage extends Component {
   defaultItemText = "Новая задача";
 
   constructor(props) {
@@ -45,7 +49,7 @@ export default class CalendarPage extends Component {
     };
     fetch("/api/item/create", requestOptions)
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => this.props.history("/item/" + data.id));
   }
 
   render() {
@@ -113,3 +117,5 @@ export default class CalendarPage extends Component {
     );
   }
 }
+
+export default withHistory(CalendarPage);

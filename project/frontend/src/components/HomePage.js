@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CalendarPage from "./CalendarPage";
+import Item from "./Item";
 import {
   BrowserRouter as Router,
   Route,
@@ -19,6 +20,7 @@ export default class HomePage extends Component {
         <Routes>
           <Route path="/" element={<p>This is the Home page!</p>} />
           <Route path="/calendar" element={<CalendarPage />} />
+          <Route path="/item/:id" element={<Item />} />
         </Routes>
       </Router>
     );
