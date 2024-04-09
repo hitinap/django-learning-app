@@ -18,9 +18,9 @@ export default class HomePage extends Component {
       <Router>
         <Switch>
           <Route exact path="/">
-            <p>This is Home page!</p>
+            <p>This is the Home page!</p>
           </Route>
-          <Route path="/calendar" Component={CalendarPage} />
+          <Route path="/calendar" component={CalendarPage} />
         </Switch>
       </Router>
     );
