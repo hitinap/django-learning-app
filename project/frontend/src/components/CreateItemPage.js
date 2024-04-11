@@ -14,7 +14,7 @@ function withHistory(Component) {
   return (props) => <Component {...props} history={useNavigate()} />;
 }
 
-class CalendarPage extends Component {
+class CreateItemPage extends Component {
   defaultItemText = "Новая задача";
 
   constructor(props) {
@@ -118,4 +118,4 @@ class CalendarPage extends Component {
   }
 }
 
-export default withHistory(CalendarPage);
+export default withHistory(CreateItemPage);

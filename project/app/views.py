@@ -27,6 +27,25 @@ class GetItem(APIView):
         return Response({'Bad request': 'Id not found in request.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class SearchItemView(APIView):
+    lookup_url_kwarg = 'id'
+
+    def post(self, request, format=None):
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        _id = request.data.get(self.lookup_url_kwarg)
+        if _id is not None:
+            item_result = Item.objects.filter(id=_id)
+            if len(item_result) > 0:
+                item = item_result[0]
+                self.request.session['item_id'] = _id
+                return Response({'message': 'Item found!'}, status=status.HTTP_200_OK)
+            return Response({'Bad request': 'Invalid item id'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'Bad request': 'Invalid post data, id not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
 class CreateItemView(APIView):
     serializer_class = CreateItemSerializer
 
@@ -46,8 +65,10 @@ class CreateItemView(APIView):
                 item.text = text
                 item.done = done
                 item.save(update_fields=['text', 'done'])
+                self.request.session['item_id'] = item.id
             else:
                 item = Item(host=host, text=text, done=done)
                 item.save()
+                self.request.session['item_id'] = item.id
 
         return Response(ItemSerializer(item).data, status=status.HTTP_201_CREATED)

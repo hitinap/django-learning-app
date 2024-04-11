@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import CalendarPage from "./CalendarPage";
+import CreateItemPage from "./CreateItemPage";
+import SearchItemPage from "./SearchItemPage";
 import Item from "./Item";
 import {
   BrowserRouter as Router,
@@ -19,7 +20,8 @@ export default class HomePage extends Component {
       <Router>
         <Routes>
           <Route path="/" element={<p>This is the Home page!</p>} />
-          <Route path="/calendar" element={<CalendarPage />} />
+          <Route path="/create" element={<CreateItemPage />} />
+          <Route path="/search" element={<SearchItemPage />} />
           <Route path="/item/:id" element={<Item />} />
         </Routes>
       </Router>

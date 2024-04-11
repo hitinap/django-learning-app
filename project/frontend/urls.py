@@ -3,6 +3,7 @@ from .views import index
 
 urlpatterns = [
     path('', index),
-    path('calendar', index),
+    path('create', index),
     path('item/<int:id>', index),
+    path('search', index),
 ]
