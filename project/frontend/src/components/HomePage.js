@@ -18,6 +18,7 @@ export default class HomePage extends Component {
     this.state = {
       id: null,
     };
+    this.clearItemId = this.clearItemId.bind(this);
   }
 
   async componentDidMount() {
@@ -50,21 +51,19 @@ export default class HomePage extends Component {
     );
   }
 
+  redirectIfHasItem(id) {
+    return id ? <Navigate to={`/item/${id}`} replace /> : this.renderHomePage();
+  }
+
+  clearItemId() {
+    this.setState({ id: null });
+  }
+
   render() {
     return (
       <Router>
         <Routes>
-          <Route
-            path="/"
-            element={this.renderHomePage()}
-            loader={() => {
-              return this.state.id ? (
-                <Navigate to={`/item/${this.state.id}`} replace />
-              ) : (
-                this.renderHomePage()
-              );
-            }}
-          />
+          <Route path="/" element={this.redirectIfHasItem(this.state.id)} />
           <Route path="/create" element={<CreateItemPage />} />
           <Route path="/search" element={<SearchItemPage />} />
           <Route path="/item/:id" element={<Item />} />

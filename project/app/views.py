@@ -82,3 +82,16 @@ class ItemOnUser(APIView):
 
         data = {'id': self.request.session.get('item_id')}
         return JsonResponse(data, status=status.HTTP_200_OK)
+
+
+class LeaveItem(APIView):
+    def post(self, request, format=None):
+        if 'item_id' in self.request.session:
+            _id = self.request.session.pop('item_id')
+            host_id = self.request.session.session_key
+            item_results = Item.objects.filter(host=host_id)
+            if len(item_results) > 0:
+                item = item_results[0]
+                item.delete()
+
+        return Response({'message': 'Success'}, status=status.HTTP_200_OK)

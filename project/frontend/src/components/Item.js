@@ -1,8 +1,11 @@
 import React, { Component } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { Grid, Button, Typography } from "@material-ui/core";
 
-function withParams(Component) {
-  return (props) => <Component {...props} params={useParams()} />;
+function withParamsAndHistory(Component) {
+  return (props) => (
+    <Component {...props} params={useParams()} history={useNavigate()} />
+  );
 }
 
 class Item extends Component {
@@ -14,6 +17,7 @@ class Item extends Component {
       done: false,
     };
     this.getItemDetails();
+    this.leaveButtonPressen = this.leaveButtonPressen.bind(this);
   }
 
   getItemDetails() {
@@ -24,15 +28,46 @@ class Item extends Component {
       });
   }
 
+  leaveButtonPressen() {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch("/api/item/leave", requestOptions).then((_response) => {
+      this.props.history("/");
+    });
+  }
+
   render() {
     return (
-      <div>
-        <h3>#{this.state.id}</h3>
-        <p>Text: {this.state.text}</p>
-        <p>Done? {this.state.done.toString()}</p>
-      </div>
+      <Grid container spacing={1}>
+        <Grid item xs={12} align="center">
+          <Typography variant="h4" component="h4">
+            Item ID is #{this.state.id}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} align="center">
+          <Typography variant="h6" component="h6">
+            Text: {this.state.text}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} align="center">
+          <Typography variant="h6" component="h6">
+            The item is done? {this.state.done.toString()}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} align="center">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={this.leaveButtonPressen}
+          >
+            Leave item page
+          </Button>
+        </Grid>
+      </Grid>
     );
   }
 }
 
-export default withParams(Item);
+export default withParamsAndHistory(Item);
