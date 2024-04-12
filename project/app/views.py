@@ -4,6 +4,7 @@ from .models import Item
 from .serializers import ItemSerializer, CreateItemSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.http import JsonResponse
 
 # Create your views here.
 class ItemView(generics.ListAPIView):
@@ -72,3 +73,12 @@ class CreateItemView(APIView):
                 self.request.session['item_id'] = item.id
 
         return Response(ItemSerializer(item).data, status=status.HTTP_201_CREATED)
+
+
+class ItemOnUser(APIView):
+    def get(self, request, format=None):
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        data = {'id': self.request.session.get('item_id')}
+        return JsonResponse(data, status=status.HTTP_200_OK)
