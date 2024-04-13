@@ -12,3 +12,11 @@ class CreateItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = ('text', 'done')
+
+
+class UpdateItemSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(validators=[])
+
+    class Meta:
+        model = Item
+        fields = ('text', 'done', 'id')

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ItemView, CreateItemView, GetItem, SearchItemView, ItemOnUser, LeaveItem
+from .views import ItemView, CreateItemView, GetItem, SearchItemView, ItemOnUser, LeaveItem, UpdateView
 
 urlpatterns = [
     path('item', ItemView.as_view()),
@@ -8,4 +8,5 @@ urlpatterns = [
     path('search', SearchItemView.as_view()),
     path('item/on-user', ItemOnUser.as_view()),
     path('item/leave', LeaveItem.as_view()),
+    path('item/update', UpdateView.as_view()),
 ]

@@ -18,7 +18,6 @@ export default class HomePage extends Component {
     this.state = {
       id: null,
     };
-    this.clearItemId = this.clearItemId.bind(this);
   }
 
   async componentDidMount() {
@@ -53,10 +52,6 @@ export default class HomePage extends Component {
 
   redirectIfHasItem(id) {
     return id ? <Navigate to={`/item/${id}`} replace /> : this.renderHomePage();
-  }
-
-  clearItemId() {
-    this.setState({ id: null });
   }
 
   render() {

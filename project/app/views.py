@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, status
 from .models import Item
-from .serializers import ItemSerializer, CreateItemSerializer
+from .serializers import ItemSerializer, CreateItemSerializer, UpdateItemSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import JsonResponse
@@ -95,3 +95,33 @@ class LeaveItem(APIView):
                 item.delete()
 
         return Response({'message': 'Success'}, status=status.HTTP_200_OK)
+
+
+class UpdateView(APIView):
+    serializer_class = UpdateItemSerializer
+
+    def patch(self, request, format=None):
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            text = serializer.data.get('text')
+            done = serializer.data.get('done')
+            _id = serializer.data.get('id')
+
+            queryset = Item.objects.filter(id=_id)
+            if not queryset.exists():
+                return Response({'msg': 'Item not found'}, status=status.HTTP_404_NOT_FOUND)
+
+            item = queryset[0]
+            host_id = self.request.session.session_key
+            if item.host != host_id:
+                return Response({'msg': 'Its not you item'}, status=status.HTTP_403_FORBIDDEN)
+
+            item.text = text
+            item.done = done
+            item.save(update_fields=['text', 'done'])
+            return Response(ItemSerializer(item).data, status=status.HTTP_200_OK)
+
+        return Response({'Bad request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
