@@ -1,0 +1,45 @@
+# Создать новый проект
+django-admin startproject <project_name>
+
+# Создать новое приложение внутри проекта
+django-admin startapp <app_name>
+
+# Создать файл requirements.txt в папке репозитория
+pipreqs .
+
+# Выполнить миграции при первом запуске
+python manage.py makemigrations
+python manage.py migrate
+
+# Запустить проект django
+python manage.py runserver
+
+# Инициализация npm в корне frontend
+npm init -y
+
+# Добавляем в приложение webpack
+npm i webpack webpack-cli --save-dev
+
+# Добавляем в приложение babel
+npm i @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev
+
+# Добавляем в приложение react
+npm i react react-dom --save-dev
+
+# Установка дополнительных материалов
+npm install @material-ui/core
+
+# Установка proposal-properties
+npm install @babel/plugin-proposal-class-properties --force
+
+# Установка маршрутизатора react
+npm install react-router-dom --save --force
+
+# Установка иконок из дополнительных материалов
+npm install @material-ui/icons --force
+
+# Установка материалов npm lab
+npm install @material-ui/lab --force
+
+# Запустить dev окружение npm из корня frontend
+npm run dev
