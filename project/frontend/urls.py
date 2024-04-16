@@ -6,4 +6,5 @@ urlpatterns = [
     path('create', index),
     path('item/<int:id>', index),
     path('search', index),
+    path('info', index),
 ]

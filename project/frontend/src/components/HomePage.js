@@ -11,6 +11,7 @@ import {
   Navigate,
   Redirect,
 } from "react-router-dom";
+import Info from "./Info";
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -41,6 +42,9 @@ export default class HomePage extends Component {
             <Button color="primary" to="/search" component={Link}>
               Search the item
             </Button>
+            <Button color="default" to="/info" component={Link}>
+              Info
+            </Button>
             <Button color="secondary" to="/create" component={Link}>
               Create new item
             </Button>
@@ -60,6 +64,7 @@ export default class HomePage extends Component {
         <Routes>
           <Route path="/" element={this.redirectIfHasItem(this.state.id)} />
           <Route path="/create" element={<CreateItemPage />} />
+          <Route path="/info" element={<Info />} />
           <Route path="/search" element={<SearchItemPage />} />
           <Route path="/item/:id" element={<Item />} />
         </Routes>
